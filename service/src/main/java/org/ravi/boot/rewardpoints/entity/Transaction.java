@@ -13,13 +13,20 @@ public class Transaction {
 	private long customerId;
 	private Date transactionDate;
 	private float transactionAmount;
+	private String customerName;
 
-	
-	
 	@Override
 	public String toString() {
 		return "Transaction [transactionId=" + transactionId + ", customerId=" + customerId + ", transactionDate="
-				+ transactionDate + ", transactionAmount=" + transactionAmount + "]";
+				+ transactionDate + ", transactionAmount=" + transactionAmount + ", customerName=" + customerName + "]";
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
 	public long getTransactionId() {

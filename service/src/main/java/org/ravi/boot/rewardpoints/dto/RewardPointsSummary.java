@@ -7,17 +7,17 @@ public class RewardPointsSummary {
 	private long month1Points;
 	private long month2Points;
 	private long month3Points;
-	private long totlPoints;
+	private long totalPoints;
 	
 	public RewardPointsSummary(String customerId, String name, long month1Points, long month2Points, long month3Points,
-			long totlPoints) {
+			long totalPoints) {
 		super();
 		this.customerId = customerId;
 		this.name = name;
 		this.month1Points = month1Points;
 		this.month2Points = month2Points;
 		this.month3Points = month3Points;
-		this.totlPoints = totlPoints;
+		this.totalPoints = totalPoints;
 	}
 
 	public String getCustomerId() {
@@ -60,12 +60,12 @@ public class RewardPointsSummary {
 		this.month3Points = month3Points;
 	}
 
-	public long getTotlPoints() {
-		return totlPoints;
+	public long getTotalPoints() {
+		return totalPoints;
 	}
 
-	public void setTotlPoints(long totlPoints) {
-		this.totlPoints = totlPoints;
+	public void setTotalPoints(long totalPoints) {
+		this.totalPoints = totalPoints;
 	}
 	
 	

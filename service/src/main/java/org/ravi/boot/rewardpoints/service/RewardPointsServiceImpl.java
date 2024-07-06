@@ -16,15 +16,17 @@ public class RewardPointsServiceImpl implements RewardPointsService{
 	@Autowired
 	private TransactionRepository transactionRepository;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public RewardPointsSummary getRewardPointsByIdAndMonth(String customerId, String months, String year) {
 		String[] monthArray = months.split(",");
 		List<Transaction> transactions = transactionRepository.getByCustomerId(customerId, year, monthArray[0], monthArray[1], monthArray[2]);
-		Map<Integer, List<Transaction>> transactionsByMonth = transactions.stream().collect(Collectors.groupingBy(e-> e.getTransactionDate().getMonth()));
+		// TODO : fix deprecation
+		Map<Integer, List<Transaction>> transactionsByMonth = transactions.stream().collect(Collectors.groupingBy(e-> e.getTransactionDate().getMonth()+1));
 		int month1Points = getPointsByMonth(transactionsByMonth.get(Integer.valueOf(monthArray[0])));
 		int month2Points = getPointsByMonth(transactionsByMonth.get(Integer.valueOf(monthArray[1])));
 		int month3Points = getPointsByMonth(transactionsByMonth.get(Integer.valueOf(monthArray[2])));
-		RewardPointsSummary rewardPointsSummary = new RewardPointsSummary(customerId, "", month1Points,month2Points,month3Points, month1Points+month2Points+month3Points); 
+		RewardPointsSummary rewardPointsSummary = new RewardPointsSummary(customerId, transactions.get(0).getCustomerName(), month1Points,month2Points,month3Points, month1Points+month2Points+month3Points); 
 		return rewardPointsSummary;
 	}
 	
@@ -35,12 +37,13 @@ public class RewardPointsServiceImpl implements RewardPointsService{
 	}
 	
 	private Integer getPointsByTransaction(Transaction transaction) {
-		Float transactionUpto100=0.0f;
-		Float transactionAfter100=0.0f;
-		Float totalAmount = transaction.getTransactionAmount();
-		transactionUpto100=totalAmount%100;
-		transactionAfter100=totalAmount-transactionUpto100;
-		return (transactionUpto100.intValue() * 1) + (transactionAfter100.intValue() * 2);
+		int transactionAmount = (int)transaction.getTransactionAmount();
+		if (transactionAmount < 50 )
+			return 0;
+		else if( transactionAmount >= 50 && transactionAmount <= 100 )
+			return transactionAmount-50;
+		else 
+			return 2 * (transactionAmount-100) + 50;
 	}
 	
 

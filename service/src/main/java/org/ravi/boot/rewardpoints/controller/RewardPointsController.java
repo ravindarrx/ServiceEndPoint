@@ -15,8 +15,8 @@ public class RewardPointsController {
 	private RewardPointsService rewardPointsService;
 
 	@GetMapping("/points")
-	public RewardPointsSummary greeting(@RequestParam String customerId, @RequestParam String monthList, @RequestParam String year) {
-		return rewardPointsService.getRewardPointsByIdAndMonth(customerId, monthList, year);
+	public RewardPointsSummary getRewardPoints(@RequestParam(value = "customerId") String customerId, @RequestParam(value = "months") String months, @RequestParam(value = "year") String year) {
+		return rewardPointsService.getRewardPointsByIdAndMonth(customerId, months, year);
 	}
 
 }
